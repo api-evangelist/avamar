@@ -1,0 +1,122 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+docs: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+note: >-
+  Avamar has no public multi-tenant API. Every credential and endpoint below is issued and hosted by
+  the customer's own Avamar server (<AvamarServer> = the IP address or FQDN of that appliance). Values
+  are transcribed verbatim from Dell's published documentation; no credentials are included.
+summary:
+  types:
+  - oauth2
+  - http
+  - openIdConnect
+  api_key_in: []
+  oauth2_flows:
+  - password
+  - clientCredentials
+  - authorizationCode
+  - implicit
+  bearer_format: JWT
+schemes:
+- name: oauth2_password
+  type: oauth2
+  flow: password
+  status: current
+  description: >-
+    Primary mechanism for third-party clients. An Avamar administrator first registers an OAuth 2.0
+    client, then the client exchanges the admin credentials for a bearer access token.
+  client_registration:
+    method: POST
+    url: https://<AvamarServer>/api/v1/oauth2/clients
+    auth: 'Authorization: Basic base64(user:password) — Avamar admin user'
+    content_type: application/json
+    body_fields:
+    - accessTokenValiditySeconds
+    - authorizedGrantTypes
+    - autoApproveScopes
+    - clientId
+    - clientName
+    - clientSecret
+    - redirectUris
+    - refreshTokenValiditySeconds
+    - scopes
+  token_endpoint:
+    method: POST
+    url: https://<AvamarServer>/api/oauth/token
+    auth: 'Authorization: Basic base64(<CLIENT_ID>:<CLIENT_SECRET>)'
+    content_type: application/x-www-form-urlencoded
+    grant_type: password
+    body_params:
+    - grant_type
+    - scope
+    - username
+    - password
+  token_response_fields:
+  - access_token
+  - token_type
+  - expires_in
+  - scope
+  - domain
+  - authorized_domain
+  - user_name
+  - role
+  - jti
+  token_type: bearer
+  token_format: JWT (RS256)
+  access_token_ttl_seconds: 1800
+  refresh_token_ttl_seconds: 43200
+  usage: 'Authorization: Bearer <access_token>'
+  source: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+- name: oauth2_customer_server
+  type: oauth2
+  flow: clientCredentials
+  status: current
+  description: >-
+    Optional integration in which the Avamar REST API delegates to a customer-operated OAuth 2.0
+    authorization server. The customer server provides a token issue endpoint and a token validation
+    endpoint; a client ID and secret are provisioned there for both the customer application and for
+    the Avamar REST API itself.
+  source: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+- name: openid_connect_sso
+  type: openIdConnect
+  status: current
+  description: >-
+    OIDC single sign-on for the Avamar Web UI (AUI), validated by Dell against Keycloak realms. An OIDC
+    client is registered through the Avamar REST API Swagger UI.
+  id_token_signed_response_alg: RS256
+  token_endpoint_auth_method: client_secret_basic
+  grant_types:
+  - implicit
+  - refresh_token
+  - client_credentials
+  - authorization_code
+  response_types:
+  - code
+  - code token
+  - token
+  scope: read openid profile write
+  login_pattern: https://<Avamar-utility-node>/aui/?iss=https://<Keycloak-server>:<port>/realms/<realm>
+  source: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+- name: basic_admin
+  type: http
+  scheme: basic
+  status: current
+  description: >-
+    HTTP Basic with Avamar administrator credentials. Used to bootstrap OAuth 2.0 client registration
+    and to obtain the initial admin token; not intended as the steady-state application credential.
+  source: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+- name: concerto_session
+  type: http
+  scheme: custom
+  status: retired
+  description: >-
+    Legacy scheme used by the separately-installed Avamar REST API server (through Avamar 18.x). A POST
+    to /rest-api/login with HTTP Basic returned a custom X-Concerto-Authorization response header
+    carrying a session token that had to be replayed on every subsequent request; POST /rest-api/logout
+    ended the session. This generation listened on port 8543 at https://RESTAPISERVER:8543/rest-api and
+    no longer appears in the 19.x documentation.
+  login: POST https://RESTAPISERVER:8543/rest-api/login
+  logout: POST https://RESTAPISERVER:8543/rest-api/logout
+  session_header: X-Concerto-Authorization
+  source: https://www.delltechnologies.com/asset/en-us/products/data-protection/technical-support/docu89854.pdf

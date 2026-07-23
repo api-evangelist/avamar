@@ -1,0 +1,65 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+docs: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+note: >-
+  Scopes are issued by the customer's own Avamar server, not by a Dell-hosted authorization server.
+  Dell's documentation publishes a coarse read/write model rather than a per-resource scope registry;
+  fine-grained authorization is carried by the Avamar role assigned to the authenticating user (the
+  token response returns `role`, `domain` and `authorized_domain`).
+schemes:
+- name: oauth2_password
+  source: authentication/avamar-authentication.yml
+  flows:
+  - flow: password
+    tokenUrl: https://<AvamarServer>/api/oauth/token
+    clientRegistrationUrl: https://<AvamarServer>/api/v1/oauth2/clients
+- name: openid_connect_sso
+  source: authentication/avamar-authentication.yml
+  flows:
+  - flow: authorizationCode
+  - flow: clientCredentials
+  - flow: implicit
+scopes:
+- scope: read
+  description: Read access to Avamar REST API resources.
+  flows:
+  - password
+  - authorizationCode
+  sources:
+  - https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+- scope: write
+  description: Write access to Avamar REST API resources, including creating clients, datasets and backups.
+  flows:
+  - password
+  - authorizationCode
+  sources:
+  - https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+- scope: all
+  description: >-
+    Wildcard value accepted in the `autoApproveScopes` field of an OAuth 2.0 client registration,
+    auto-approving every scope granted to that client.
+  flows:
+  - password
+  sources:
+  - https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+- scope: openid
+  description: Standard OIDC scope requesting an ID token. Used by the Keycloak SSO integration.
+  flows:
+  - authorizationCode
+  - implicit
+  sources:
+  - https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+- scope: profile
+  description: Standard OIDC scope requesting the authenticated user's profile claims.
+  flows:
+  - authorizationCode
+  - implicit
+  sources:
+  - https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+authorization_model:
+  mechanism: role-and-domain
+  description: >-
+    Beyond the read/write scope, effective permissions derive from the Avamar role bound to the token
+    subject and the Avamar domain the token is authorized for. The access-token response carries
+    `role` (for example ROOT), `domain` and `authorized_domain`.

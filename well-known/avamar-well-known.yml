@@ -1,0 +1,72 @@
+generated: '2026-07-19'
+method: searched
+source: live probes 2026-07-19
+note: >-
+  Avamar itself is customer-hosted, so there is no Avamar API host to probe — the /.well-known/
+  surface belongs to the Dell Technologies corporate hosts that publish the product and its
+  documentation. Requests must carry a browser User-Agent; a default curl agent is answered with 403
+  by www.dell.com. developer.dell.com answers most /.well-known/ paths with a 302 into its SPA shell
+  rather than a document, which is recorded as a non-hit.
+hosts:
+- host: https://www.dell.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: avamar-security.txt
+    standard: RFC 9116
+  - path: /llms.txt
+    status: 200
+    file: null
+    note: >-
+      A real Dell Technologies llms.txt is published, but its link list is scoped to Dell consumer PC,
+      laptop and desktop shopping pages and contains no Avamar or data-protection content. It is not
+      saved here because it would misrepresent Avamar's documentation surface; see llms/avamar-llms.txt
+      for the generated Avamar-specific file.
+  - path: /.well-known/openid-configuration
+    status: 302
+  - path: /.well-known/oauth-authorization-server
+    status: 302
+  - path: /.well-known/api-catalog
+    status: 302
+  - path: /.well-known/ai-plugin.json
+    status: 302
+- host: https://developer.dell.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: Resolves after redirect to the Dell corporate security.txt.
+  - path: /.well-known/openid-configuration
+    status: 302
+  - path: /.well-known/oauth-authorization-server
+    status: 302
+  - path: /.well-known/api-catalog
+    status: 302
+  - path: /.well-known/ai-plugin.json
+    status: 302
+  - path: /llms.txt
+    status: 302
+- host: https://www.delltechnologies.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://avamar.com
+  documents: []
+  note: >-
+    avamar.com still resolves and is served by Dell nameservers (ns1ns.dell.com and siblings) but
+    answers no HTTP request — the connection times out. The domain is retained, not operated.
+appliance_discovery:
+  note: >-
+    On a running Avamar server the machine-readable API description is served locally rather than at
+    a /.well-known/ path.
+  swagger_ui: https://<AvamarServer>/api/swagger-ui.html
+  event_catalog: /usr/local/avamar/doc/event_catalog.txt

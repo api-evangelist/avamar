@@ -1,0 +1,63 @@
+generated: '2026-07-19'
+method: searched
+probe: true
+probe_result: none
+source: https://www.dell.com/en-us/dt/about-us/security-and-trust-center/compliance-service-organization-control-overlay.htm
+note: >-
+  The automated trust-center probe returned no hit (Dell's corporate hosts answer scripted requests
+  with 403). The trust center was confirmed by search instead. Certifications below are held at the
+  Dell Technologies organizational level; none of the sources scope a certification to the Avamar
+  product specifically, and that distinction is preserved per entry.
+name: Dell Technologies Security and Trust Center
+url: https://www.dell.com/en-us/dt/about-us/security-and-trust-center/compliance-service-organization-control-overlay.htm
+regional_landing_pages:
+- https://www.dell.com/en-ie/lp/dt/security-and-trust-center
+- https://www.dell.com/en-uk/lp/dt/security-and-trust-center
+- https://www.dell.com/en-au/lp/dt/security-and-trust-center
+posture:
+  themes:
+  - security by design
+  - commitment to resilience
+  - transparency through published assessments
+certifications:
+- name: ISO/IEC 27001:2022
+  scope: >-
+    Dell Technologies Inc. multi-site certificate covering Dell Technology Services (DTS), Sales, Dell
+    Financial Services (DFS), Dell Infrastructure Solutions Group (ISG) and supporting functions.
+  product_scoped_to_avamar: false
+  evidence: https://www.delltechnologies.com/asset/en-sg/solutions/business-solutions/legal-pricing/dell-inc-iso-27001-2022-multi-site-certificate.pdf
+- name: SOC 2 Type II
+  scope: >-
+    Dell operates a centrally governed SOC program with SOC reports specific to Dell's offers and
+    services, independently assessed and attested by PwC and Schellman Compliance.
+  product_scoped_to_avamar: false
+  evidence: https://www.dell.com/en-us/dt/about-us/security-and-trust-center/compliance-service-organization-control-overlay.htm
+related_product_attestations:
+- product: Dell PowerProtect Backup Service
+  certifications:
+  - SOC 2 Type II
+  - ISO/IEC 27001:2022
+  note: >-
+    A sibling Dell data-protection offering with its own attestations. Recorded for context; it is not
+    Avamar.
+  evidence: https://infohub.delltechnologies.com/en-us/l/dell-powerprotect-backup-services-security-brief-end-user-and-saas-applications/third-party-certifications/
+- product: Dell Automated Asset Discovery
+  certifications:
+  - SOC 2 Type II
+  note: Separate Dell service; recorded for context.
+  evidence: https://www.dell.com/support/kbdoc/en-us/000204720/dell-automated-asset-discovery-security-and-compliance
+avamar_specific_certifications: []
+avamar_note: >-
+  No SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP attestation scoped specifically to Avamar was found.
+  This is consistent with the deployment model: Avamar is software a customer runs on its own
+  infrastructure, so the operating controls in scope for such an attestation belong to the customer,
+  not to Dell.
+evidence:
+- source: https://www.dell.com/en-us/dt/about-us/security-and-trust-center/compliance-service-organization-control-overlay.htm
+  keywords:
+  - security and trust center
+  - soc
+  - compliance
+- source: https://www.delltechnologies.com/asset/en-sg/solutions/business-solutions/legal-pricing/dell-inc-iso-27001-2022-multi-site-certificate.pdf
+  keywords:
+  - iso 27001

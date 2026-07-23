@@ -1,0 +1,79 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.dell.com/support/kbdoc/en-us/000185734/all-dell-emc-end-of-life-documents
+note: >-
+  Avamar is customer-hosted software, so its lifecycle is a product release/EOSL train rather than a
+  SaaS deprecation calendar. There is no Dell-operated status page for Avamar because there is no
+  Dell-operated Avamar service to report on — availability is the customer's own appliance.
+versioning:
+  api_scheme: uri-path
+  api_current: v1
+  product_scheme: release-train
+  product_current: '19.12'
+  docs: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_release_notes_19.12/new-features-and-changes
+  detail: >-
+    The REST API path carries a single major version segment (/api/v1). Functional change is tracked
+    against the Avamar product release train; each release ships its own Release Notes, Administration
+    Guide and Command Line Interface Guide.
+  known_releases:
+  - '18.1'
+  - '18.2'
+  - '19.1'
+  - '19.2'
+  - '19.3'
+  - '19.4'
+  - '19.7'
+  - '19.8'
+  - '19.9'
+  - '19.10'
+  - '19.12'
+  version_check_docs: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_release_notes_19.12/determine-the-installed-avamar-version
+deprecation:
+  policy_url: https://www.dell.com/support/kbdoc/en-us/000185734/all-dell-emc-end-of-life-documents
+  model: end-of-life / end-of-service-life (EOL / EOSL) notices per product and per release
+  sunset_header: false
+  deprecation_header: false
+  detail: >-
+    Dell publishes dated EOL and EOSL notices for Avamar software releases and for Avamar Data Store
+    hardware generations, centralized in the Dell EMC end-of-life document list. The Avamar REST API
+    itself carries no RFC 8594 Sunset or Deprecation response headers.
+  examples:
+  - subject: Avamar Extended Retention (AER)
+    kind: end-of-support-life
+    url: https://www.dell.com/support/kbdoc/en-us/000022856/avamar-extended-retention-aer-end-of-support-life-eosl
+upgrade_path:
+  docs: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_release_notes_19.10/
+  supported_source_versions:
+  - 7.5.1
+  - 18.1.x
+  - 18.2.x
+  - 19.1.x
+  - 19.2.x
+  - 19.3.x
+  - 19.4.x
+  - 19.7.x
+  - 19.8.x
+  - 19.9.x
+  note: Supported upgrade sources as published for the Avamar 19.10 release.
+retired_interfaces:
+- name: Avamar REST API server (Concerto generation)
+  base: https://RESTAPISERVER:8543/rest-api
+  auth: HTTP Basic login returning an X-Concerto-Authorization session token
+  last_documented_release: '18.1'
+  status: retired
+  detail: >-
+    Through Avamar 18.x the REST API was a separately installed server listening on port 8543 with its
+    own database and its own session model. It does not appear in the 19.x documentation; the current
+    API is served by the Avamar server itself at /api/v1 with OAuth 2.0 bearer tokens.
+  source: https://www.delltechnologies.com/asset/en-us/products/data-protection/technical-support/docu89854.pdf
+sla:
+  published: false
+  detail: >-
+    No public uptime SLA — Avamar is deployed on customer-owned or customer-managed infrastructure.
+    Support entitlements are governed by the customer's Dell service contract.
+status_page:
+  published: false
+  detail: >-
+    Dell operates no public status page for Avamar. The product is customer-hosted; operational state
+    is observed on the appliance through the Avamar Web UI (AUI), activity monitor and event catalog.
+deprecated_operations: []

@@ -1,0 +1,148 @@
+generated: '2026-07-19'
+method: derived
+source: https://www.delltechnologies.com/asset/en-us/products/data-protection/technical-support/docu89854.pdf
+additional_sources:
+- https://backups.usg.edu/19.10/Avamar_19.10_Administration_Guide.pdf
+- https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+note: >-
+  Derived from the resource nouns, href reference fields and worked examples in Dell's published
+  Avamar REST API documentation. No machine-readable OpenAPI is publicly downloadable — the Swagger
+  definition is served from the customer's own appliance at /api/swagger-ui.html — so this graph is
+  reconstructed from documentation rather than parsed from a spec, and covers the documented core
+  rather than every operation.
+identifier_convention:
+  format: uuid
+  detail: >-
+    Resources carry an `id` holding a UUID (for example 4702406e-d989-4058-...) and an `href` holding
+    the absolute URL of that resource. Cross-resource references are nested elements carrying their
+    own `href` plus `id`.
+  example_href: https://<AvamarServer>:8543/rest-api/client/4702406e-d989-4058-...
+entities:
+- name: Session
+  path: /rest-api/session
+  description: An authenticated Avamar REST API session (legacy Concerto generation).
+  status: legacy
+  fields:
+  - href
+  - AccessPoint
+- name: Client
+  path: /client
+  description: A protected machine registered with an Avamar system.
+  fields:
+  - id
+  - href
+  - name
+  - domain
+- name: Domain
+  path: /api/v1/domains
+  description: >-
+    A node in the Avamar domain hierarchy. Domains scope authorization — an access token records the
+    `domain` and `authorized_domain` it is valid for.
+- name: Dataset
+  path: /dataset
+  description: >-
+    A named definition of what to back up, composed of DatasetItem elements plus inclusion and
+    exclusion rules, optionally targeted at a Data Domain storage system.
+  child_element: DatasetItem
+- name: Backup
+  description: A stored, deduplicated point-in-time copy of a client's data.
+- name: Plugin
+  path: /plugin
+  description: >-
+    The data-source module that performs a backup (file system, VMware, SQL Server, Oracle, and so
+    on). Datasets and backups reference a Plugin by href.
+- name: Retention
+  path: /retention
+  description: >-
+    A retention policy governing how long a backup is kept, including Data Domain Retention Lock
+    period-lock and immutability settings.
+- name: Task
+  path: /task/{id}
+  description: >-
+    The asynchronous work record returned by long-running operations. Polled to completion through
+    the QUEUED / RUNNING / SUCCESS|ERROR|CANCELED|ABORTED state machine.
+  fields:
+  - id
+  - href
+  - name
+  - operation
+  - progress
+  - queueTime
+  - startTime
+  - state
+  - cancelable
+  - cancelled
+- name: Activity
+  path: /api/v1/activities
+  description: >-
+    An in-progress or completed Avamar server activity. Queried with `domain`, `duration` and
+    `recursive` filters; failed activities carry a numeric Avamar error code.
+  see_also: errors/avamar-error-codes.yml
+- name: HypervisorManager
+  description: A registered VMware vCenter server.
+- name: VirtualMachine
+  description: A VMware virtual machine protected as an Avamar client, backed up image-level.
+- name: ProxyAppliance
+  description: The Avamar proxy appliance that performs VMware image backups and restores.
+- name: OAuth2Client
+  path: /api/v1/oauth2/clients
+  description: >-
+    A registered third-party API client holding clientId, clientSecret, authorizedGrantTypes, scopes,
+    autoApproveScopes, redirectUris and token validity windows.
+  see_also: authentication/avamar-authentication.yml
+- name: ResourcePool
+  description: >-
+    A grouping of Avamar systems across which new clients are allocated (legacy multi-system REST API
+    server; BALANCED or FREE_SPACE strategy).
+  status: legacy
+- name: Tenant
+  description: A tenant in the multi-tenant hierarchy of the legacy Avamar REST API server.
+  status: legacy
+relationships:
+- from: Client
+  to: Domain
+  kind: belongs_to
+  via: domain
+- from: Client
+  to: Backup
+  kind: has_many
+- from: Dataset
+  to: DatasetItem
+  kind: has_many
+  via: DatasetItem
+- from: Dataset
+  to: Plugin
+  kind: has_many
+  via: Plugin.href
+- from: Backup
+  to: Plugin
+  kind: has_one
+  via: Plugin.href
+- from: Backup
+  to: Retention
+  kind: has_one
+  via: Retention.href
+- from: Backup
+  to: Client
+  kind: belongs_to
+- from: VirtualMachine
+  to: HypervisorManager
+  kind: belongs_to
+  via: HypervisorManager.href
+- from: VirtualMachine
+  to: ProxyAppliance
+  kind: has_one
+- from: Activity
+  to: Domain
+  kind: belongs_to
+  via: domain
+- from: Task
+  to: Activity
+  kind: has_one
+- from: ResourcePool
+  to: Client
+  kind: has_many
+- from: Tenant
+  to: ResourcePool
+  kind: has_many
+render: null

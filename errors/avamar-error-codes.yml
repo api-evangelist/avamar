@@ -1,0 +1,80 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.dell.com/support/kbdoc/en-us/000039608/list-of-avamar-client-backup-error-codes-and-exit-codes
+additional_sources:
+- https://www.dell.com/support/kbdoc/en-us/000039031/backup-failure-events-codes-listings-for-an-on-demand-email-alert-profile
+- https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+format: proprietary
+rfc9457: false
+note: >-
+  Avamar layers two distinct error surfaces: HTTP-level errors returned by the REST API, and numeric
+  Avamar event/error codes attached to backup, restore and move activities. The authoritative numeric
+  registry is not published as a single machine-readable file — Dell distributes it as KB articles and
+  ships the complete catalog on the appliance itself. Only entries verified in Dell documentation are
+  recorded below; the numeric catalog is referenced rather than reproduced.
+api_error_envelope:
+  transport: HTTP status code
+  body_field: message
+  media_types:
+  - application/json
+  - application/xml
+  detail: >-
+    For a synchronous call the HTTP response code indicates the operation's final status; when the
+    operation fails the response body includes a `message` element describing the reason. For an
+    asynchronous call the failure surfaces on the task resource as a terminal `state` of ERROR,
+    CANCELED or ABORTED.
+  troubleshooting: >-
+    Dell's documented failure-triage procedure is to examine the HTTP status code returned by the
+    Avamar REST API server and then examine the Avamar REST API log.
+async_failure_states:
+- state: ERROR
+  meaning: The asynchronous operation failed.
+- state: CANCELED
+  meaning: The asynchronous operation was canceled before completion.
+- state: ABORTED
+  meaning: The asynchronous operation was aborted.
+numeric_error_catalog:
+  published: true
+  machine_readable: false
+  on_appliance_path: /usr/local/avamar/doc/event_catalog.txt
+  on_appliance_dir: /usr/local/avamar/doc
+  references:
+  - title: Avamar - List of Avamar Client Backup Error and Exit Codes
+    url: https://www.dell.com/support/kbdoc/en-us/000039608/list-of-avamar-client-backup-error-codes-and-exit-codes
+    covers: client backup error codes, associated exit codes, and error message summaries
+  - title: Avamar - Backup Failure Events Codes Listings for an On-Demand Email Alert Profile
+    url: https://www.dell.com/support/kbdoc/en-us/000039031/backup-failure-events-codes-listings-for-an-on-demand-email-alert-profile
+    covers: backup failure event codes usable in alert profiles
+  - title: Avamar Administration Guide - Events, Notifications, and Profiles
+    url: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/
+    covers: event code model, notification profiles
+  observed_codes:
+  - code: 14003
+    context: Dell Isilon NDMP
+    source: Avamar 19.10 Administration Guide
+  - code: 10026
+    context: VM image-level backup failure to Data Domain
+    source: https://www.dell.com/support/kbdoc/en-us/000063080/vm-backup-fails-with-10026-error
+retryable_error_class:
+  setting: move.queue.error.codes
+  detail: >-
+    Avamar Client Manager treats a specific set of numeric error codes as retryable for client move
+    tasks — a failed move is queued for retry only when its failure produces one of these codes. The
+    default list is the closest thing Dell publishes to a machine-readable transient-error class.
+  default_codes:
+  - 22271
+  - 22280
+  - 22282
+  - 22295
+  - 30006
+  - 30012
+  - 30016
+  - 30017
+  - 30019
+  special_values:
+    none: never queue a failed move task for retry
+    empty: queue every failed move task for retry
+  retry_policy:
+    move_retry_attempts: 24
+    move_retry_frequency_minutes: 120
+  source: Avamar 19.10 Administration Guide, Avamar Client Manager configuration

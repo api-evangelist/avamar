@@ -1,21 +1,130 @@
 aid: avamar
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/avamar.png
 name: Avamar
-description: Avamar is a company surfaced as a portfolio company of lightspeed-venture-partners and added
-  to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: 'Avamar is enterprise backup and recovery software built on client-side global data deduplication,
+  founded in Irvine, California and backed by Lightspeed Venture Partners before EMC acquired the company
+  in November 2006 for approximately $165 million. Avamar now ships as Dell Avamar, part of the Dell Technologies
+  data protection portfolio, and is deployed as a customer-hosted appliance or virtual edition rather
+  than as a public SaaS. It exposes a REST API on the Avamar server for programmatic backup, restore,
+  client, domain, dataset, policy and activity management, secured with OAuth 2.0 access tokens and
+  optional OIDC single sign-on, and documented through a Swagger UI served from the appliance itself.
+  A first-party Management Console Command Line Interface (mccli) and the avtar/avmaint command set
+  provide the scripted administrative surface alongside the API.'
 url: https://raw.githubusercontent.com/api-evangelist/avamar/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - lightspeed-venture-partners
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-status: acquired
+x-acquired-by: EMC Corporation (now Dell Technologies)
+x-acquired-date: '2006-11-15'
+x-deployment: customer-hosted
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Backup
+- Data Protection
+- Deduplication
+- Disaster Recovery
+- Storage
+- Enterprise Software
+- Infrastructure
+- Dell Technologies
+- On-Premise
+apis:
+- aid: avamar:avamar-rest-api
+  name: Avamar REST API
+  description: 'The Avamar REST API provides a framework to develop applications and tools that interact
+    with a stand-alone Avamar server. It exposes backup, restore, client, domain, dataset, retention,
+    policy, plugin and activity resources over HTTPS on the Avamar server itself. Third-party clients
+    are registered as OAuth 2.0 clients and call the API with a bearer access token. A Swagger UI served
+    from the appliance at /api/swagger-ui.html carries the complete operation and object-model listing.'
+  humanURL: https://www.dell.com/support/home/en-us/product-support/product/avamar-rest-api/docs
+  baseURL: https://avamarserver/api/v1
+  x-baseURL-note: Customer-hosted. <avamarserver> is the IP address or FQDN of the customer's own Avamar
+    server; Dell publishes no shared multi-tenant production host.
+  tags:
+  - Backup
+  - Data Protection
+  - REST
+  - OAuth
+  properties:
+  - type: Documentation
+    url: https://www.dell.com/support/home/en-us/product-support/product/avamar-rest-api/docs
+  - type: APIReference
+    url: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+  - type: GettingStarted
+    url: https://www.delltechnologies.com/asset/en-us/products/data-protection/technical-support/docu89854.pdf
+common:
+- type: DeveloperPortal
+  url: https://developer.dell.com/
+- type: Documentation
+  url: https://www.dell.com/support/home/en-us/product-support/product/avamar-rest-api/docs
+- type: APIReference
+  url: https://www.dell.com/support/product-details/en-us/product/avamar-rest-api/resources/manuals
+- type: GettingStarted
+  url: https://www.delltechnologies.com/asset/en-us/products/data-protection/technical-support/docu89854.pdf
+- type: Support
+  url: https://www.dell.com/support/home/en-us/product-support/product/avamar-server/overview
+- type: GitHubOrganization
+  url: https://github.com/dell
+- type: Authentication
+  url: authentication/avamar-authentication.yml
+- type: OAuthScopes
+  url: scopes/avamar-scopes.yml
+- type: Conventions
+  url: conventions/avamar-conventions.yml
+- type: ErrorCatalog
+  url: errors/avamar-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/avamar-lifecycle.yml
+- type: Deprecation
+  url: https://www.dell.com/support/kbdoc/en-us/000185734/all-dell-emc-end-of-life-documents
+- type: ChangeLog
+  url: changelog/avamar-changelog.yml
+- type: CLI
+  url: cli/avamar-cli.yml
+- type: DataModel
+  url: data-model/avamar-data-model.yml
+- type: Conformance
+  url: conformance/avamar-conformance.yml
+- type: Compliance
+  url: https://www.dell.com/en-us/dt/about-us/security-and-trust-center/compliance-service-organization-control-overlay.htm
+- type: TrustCenter
+  url: security/avamar-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/avamar-vulnerability-disclosure.yml
+- type: Security
+  url: https://www.dell.com/support/contents/en-us/article/product-support/self-support-knowledgebase/security-antivirus/alerts-vulnerabilities/dell-vulnerability-response-policy
+- type: DomainSecurity
+  url: security/avamar-domain-security.yml
+- type: WellKnown
+  url: well-known/avamar-well-known.yml
+- type: SecurityTxt
+  url: well-known/avamar-security.txt
+- type: Packages
+  url: packages/avamar-packages.yml
+- type: LLMsTxt
+  url: llms/avamar-llms.txt
+x-enrichment:
+  date: '2026-07-19'
+  status: enriched
+  artifacts_added: 14
+  pass: local-v1
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

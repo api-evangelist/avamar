@@ -1,0 +1,71 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_release_notes_19.12/new-features-and-changes
+note: >-
+  Avamar has no rolling dated API changelog. Change is published as per-release Release Notes, each
+  carrying a revision history table plus New features / Changed features / Resolved issues / Known
+  issues sections. Only releases whose publication date could be verified are dated below.
+scheme: release-train
+current_version: '19.12'
+changelog_style: per-release release notes
+changelog_url: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_release_notes_19.12/new-features-and-changes
+entry_sections:
+- New features and changes
+- Changed features
+- Resolved issues
+- Known issues
+- Environment and system requirements
+- Installation and upgrade considerations
+entries:
+- version: '19.12'
+  date: null
+  url: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_release_notes_19.12/new-features-and-changes
+  breaking: unknown
+  highlights:
+  - Current Avamar release train; ships its own Release Notes, Administration Guide and Command Line
+    Interface Guide (the MCCLI guide is retitled "Command Line Interface Guide" at this release).
+- version: '19.10'
+  date: '2024-01'
+  revised: '2024-02'
+  revision: A01
+  url: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_release_notes_19.10/new-features-and-changes
+  breaking: false
+  additions:
+  - AUI - information button in the Replace Private Entry wizard explaining Private Key, Certificate
+    and chain of trusted root certificates.
+  - AUI - Korean language support.
+  - AUI - new Backup Lock, Backup Lock Expiry Date and Immutable Backup Configuration columns in the
+    backup list pane.
+  - AUI - add and update SMTP mail server details from the Settings window.
+  - Avamar Server - new "[avtar]repl-metadata-only" option to replicate metadata only.
+  - Avamar Server - new "[replscript]copyuser" option controlling whether source-system user accounts
+    are copied to the REPLICATE domain of the destination system (default true).
+  - Avamar Server - Data Domain Retention Lock (DDRL) support in governance mode, including period
+    lock and a "No end date" option in retention policy settings.
+- version: '19.9'
+  date: '2023-05'
+  revision: A00
+  breaking: false
+  highlights:
+  - Release notes published May 2023.
+- version: '19.4'
+  date: '2020-11'
+  revision: '01'
+  breaking: false
+  highlights:
+  - Release notes published November 2020.
+- version: '19.2'
+  date: '2020-06'
+  revision: '04'
+  breaking: false
+  highlights:
+  - Administration Guide revision 04 published June 2020.
+- version: '18.1'
+  date: '2018-07'
+  revision: REV 01
+  url: https://www.delltechnologies.com/asset/en-us/products/data-protection/technical-support/docu89854.pdf
+  breaking: false
+  highlights:
+  - Last release train documented for the standalone Avamar REST API server on port 8543 with the
+    X-Concerto-Authorization session model; superseded in 19.x by the OAuth 2.0 /api/v1 surface on the
+    Avamar server itself.

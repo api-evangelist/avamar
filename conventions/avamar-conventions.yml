@@ -1,0 +1,123 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_administration_guide_19.10/avamar-rest-api
+additional_sources:
+- https://www.delltechnologies.com/asset/en-us/products/data-protection/technical-support/docu89854.pdf
+note: >-
+  Cross-cutting request/response semantics for the Avamar REST API, transcribed from Dell's published
+  administration and getting-started guides. Fields recorded as `documented: false` were searched for
+  in the official documentation and not found — they are absences, not omissions.
+authentication:
+  style: oauth2-bearer
+  detail: See authentication/avamar-authentication.yml
+  bootstrap: HTTP Basic with Avamar admin credentials to register an OAuth 2.0 client
+transport:
+  protocol: https
+  tls_required: true
+  base_path: /api/v1
+  swagger_ui: https://<AvamarServer>/api/swagger-ui.html
+content_negotiation:
+  request_header: Accept
+  response_media_types:
+  - application/json
+  - application/xml
+  detail: >-
+    Resource representations are returned as JSON or XML depending on the value of the Accept request
+    header. Objects carry a `type` field enumerating the media types they can be rendered as, for
+    example "application/xml,application/json".
+hypermedia:
+  style: href-links
+  detail: >-
+    Every resource representation carries an `href` field holding the absolute URL of that resource,
+    and references between resources (Plugin, Retention, Client, HypervisorManager) are expressed as
+    nested elements with their own `href`. Clients are expected to follow `href` values rather than
+    construct paths.
+  example_reference_fields:
+  - href
+  - id
+  - name
+  - type
+async_operations:
+  supported: true
+  style: task-resource
+  detail: >-
+    The API splits operations into synchronous and asynchronous calls. Long-running operations (for
+    example initiating a client backup or creating a client) return immediately with a `task` element
+    instead of the final result. Clients poll the task to completion.
+  poll: GET /task/{TASK_URI}
+  task_fields:
+  - id
+  - href
+  - name
+  - operation
+  - progress
+  - queueTime
+  - startTime
+  - state
+  - cancelable
+  - cancelled
+  states:
+  - QUEUED
+  - RUNNING
+  - SUCCESS
+  - ERROR
+  - CANCELED
+  - ABORTED
+  initial_state: QUEUED
+error_envelope:
+  format: proprietary
+  rfc9457: false
+  detail: >-
+    On a failed synchronous call the response body carries a `message` element describing the reason
+    for the failure, alongside the HTTP status code. Product activities additionally surface numeric
+    Avamar error codes. Dell does not publish an application/problem+json contract for this API.
+  see_also: errors/avamar-error-codes.yml
+idempotency:
+  supported: false
+  documented: false
+  detail: >-
+    Dell publishes no idempotency-key header, request-deduplication window, or safe-retry contract for
+    the Avamar REST API. Retry safety rests on HTTP method semantics and on the task-resource pattern
+    for asynchronous work.
+pagination:
+  documented: false
+  detail: >-
+    No cursor, page, limit or offset parameters are documented for Avamar REST API collection
+    endpoints. Collection scope is narrowed with resource filters instead — for example the
+    activities call accepts `domain`, `duration` and `recursive`.
+  filter_params_observed:
+  - domain
+  - duration
+  - recursive
+field_expansion:
+  documented: false
+metadata:
+  documented: false
+request_tracing:
+  request_id_header: null
+  documented: false
+versioning:
+  api_scheme: uri-path
+  api_current: v1
+  product_scheme: release-train
+  product_current: '19.12'
+  detail: >-
+    The API path carries a major version segment (/api/v1) while functional change tracks the Avamar
+    product release train (18.1, 19.x). Behaviour differences are documented per product version
+    rather than per API version.
+  see_also: lifecycle/avamar-lifecycle.yml
+rate_limiting:
+  api_rate_limit_documented: false
+  detail: >-
+    No HTTP rate-limit headers or quotas are documented for the Avamar REST API. Avamar does expose
+    data-plane throttling (a network usage throttle in Mbps, and the avtar `throttle` setting), but
+    that governs backup traffic, not API request volume.
+allocation_strategy:
+  detail: >-
+    The legacy multi-system Avamar REST API server allocated new clients across Avamar systems using a
+    configurable strategy.
+  strategies:
+  - BALANCED
+  - FREE_SPACE
+  default: BALANCED
+  status: legacy

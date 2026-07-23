@@ -1,0 +1,74 @@
+generated: '2026-07-19'
+method: searched
+source: registry search (npm, PyPI, RubyGems, NuGet, Packagist, crates.io) + GitHub search
+note: >-
+  Dell publishes NO first-party Avamar client library in any public package registry. Every registry
+  below was queried on 2026-07-19 and returned no Avamar client library. Avamar's supported programmatic
+  surfaces are the REST API served from the appliance and the bundled command-line tools catalogued in
+  cli/avamar-cli.yml, both distributed with the product rather than through a developer registry. The
+  entries recorded here are community projects, explicitly marked official:false.
+registries_searched:
+- registry: npm
+  query: avamar
+  official_results: 0
+- registry: pypi
+  query: avamar
+  official_results: 0
+  status: 404
+- registry: rubygems
+  query: avamar
+  official_results: 0
+- registry: nuget
+  query: avamar
+  official_results: 0
+- registry: packagist
+  query: avamar
+  official_results: 0
+- registry: crates.io
+  query: avamar
+  official_results: 0
+- registry: maven-central
+  query: avamar
+  official_results: 0
+  note: >-
+    The MCCLI is a Java client, but it is distributed as part of the Avamar product installer and is
+    not published to Maven Central.
+packages: []
+first_party_distribution:
+- name: Avamar MCCLI Java client
+  channel: Dell product installer
+  official: true
+  registry: null
+  detail: Installed from the Avamar MCCLI software package; see cli/avamar-cli.yml.
+- name: Avamar client (avtar and related binaries)
+  channel: Dell product installer
+  official: true
+  registry: null
+community_projects:
+- name: mitel/avamar-sdk
+  url: https://github.com/mitel/avamar-sdk
+  language: javascript
+  official: false
+  description: Unofficial EMC Avamar REST API wrapper.
+- name: rjainoje/DPS-RESTAPI-Postman-Collections
+  url: https://github.com/rjainoje/DPS-RESTAPI-Postman-Collections
+  language: null
+  official: false
+  description: >-
+    Community Postman collections for Dell EMC data protection products including Avamar, NetWorker
+    and Data Domain. Not a Dell-published Postman workspace.
+- name: bottkars/terraforming-dps
+  url: https://github.com/bottkars/terraforming-dps
+  language: hcl
+  official: false
+  description: Terraform configurations for Dell data protection appliances.
+- name: ttuellmann/ansible-avamar
+  url: https://github.com/ttuellmann/ansible-avamar
+  language: null
+  official: false
+  description: Ansible playbooks to manage Avamar.
+- name: clintkitson/ps_avamar_rest
+  url: https://github.com/clintkitson/ps_avamar_rest
+  language: powershell
+  official: false
+  description: PowerShell helpers for the Avamar REST API.

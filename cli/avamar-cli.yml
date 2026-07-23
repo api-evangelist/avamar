@@ -1,0 +1,116 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_cli_guide_19.12/preface
+additional_sources:
+- https://www.dell.com/support/manuals/en-us/avamar-server/avamar_mccli_guide_19.10/preface
+- https://backups.usg.edu/19.10/Avamar_19.10_Administration_Guide.pdf
+note: >-
+  Avamar ships a first-party command-line surface, but it is not a downloadable developer CLI from a
+  public package registry — the binaries install with the Avamar server, the Avamar client, or the
+  separately installable MCCLI Java client. Command groups below were verified in Dell's published
+  Administration Guide and MCCLI/CLI Guides; the full command reference lives in those guides.
+clis:
+- name: mccli
+  title: Avamar Management Console Command Line Interface
+  official: true
+  kind: java-client
+  description: >-
+    The primary administrative CLI. A Java client application that drives the Avamar Management
+    Console server — the same management surface the Avamar Web UI (AUI) uses — for scripted
+    administration of clients, backups, checkpoints, policies and Data Domain targets.
+  docs:
+    current: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_cli_guide_19.12/preface
+    v19_10: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_mccli_guide_19.10/preface
+    command_reference: https://www.dell.com/support/manuals/en-us/avamar-server/avamar_mccli_guide_19.10/command-reference
+  install:
+    method: bundled installer
+    detail: >-
+      Installed and configured from the Avamar MCCLI Java client software package; can be installed on
+      a Linux client alongside the AvamarConsole software.
+  invocation: mccli <resource> <action> [--argument=value ...]
+  documented_topics:
+  - command reference
+  - general programming notes
+  - data types
+  - default values
+  - optional and required arguments
+  - pattern matching
+  - output description
+  - command line syntax
+  command_groups:
+  - group: backup
+    verified_commands:
+    - mccli backup restore
+    - mccli backup validate
+    - mccli backup edit
+    - mccli backup delete
+  - group: checkpoint
+    verified_commands:
+    - mccli checkpoint create
+    - mccli checkpoint show
+    - mccli checkpoint validate
+  - group: client
+    verified_commands:
+    - mccli client edit
+  - group: dd
+    description: Data Domain / PowerProtect DD target management.
+    verified_commands:
+    - mccli dd show-prop
+  - group: profile
+    description: Notification and SNMP profile management.
+    verified_commands:
+    - mccli profile show-snmp-contact
+    - mccli profile update-snmp-contact
+  command_groups_note: >-
+    Only command groups observed verbatim in the Avamar 19.10 Administration Guide are listed. The
+    MCCLI/CLI Guide carries the complete resource and action matrix.
+- name: avtar
+  title: Avamar backup/restore client command
+  official: true
+  kind: client-binary
+  description: >-
+    The Avamar client-side backup and restore engine, invoked directly for scripted backups and
+    restores and configured through bracketed options (for example "[avtar]repl-metadata-only",
+    "[avtar]throttle").
+  install:
+    method: bundled with the Avamar client
+- name: avmaint
+  title: Avamar server maintenance command
+  official: true
+  kind: server-binary
+  description: Low-level Avamar server maintenance and configuration operations.
+  install:
+    method: bundled with the Avamar server
+- name: dpnctl
+  title: Avamar service control command
+  official: true
+  kind: server-binary
+  description: Starts, stops and reports status for Avamar server services.
+  install:
+    method: bundled with the Avamar server
+- name: avinstaller
+  title: Avamar installation manager
+  official: true
+  kind: server-binary
+  description: Drives Avamar package installation and upgrade work orders.
+  install:
+    method: bundled with the Avamar server
+- name: avmgr
+  title: Avamar server management command
+  official: true
+  kind: server-binary
+  description: Direct Avamar server management operations.
+  install:
+    method: bundled with the Avamar server
+key_flows:
+- flow: Create and validate a checkpoint before maintenance
+  commands:
+  - mccli checkpoint create --override_maintenance_scheduler=true
+  - mccli checkpoint show
+  - mccli checkpoint validate
+- flow: Restore from a backup
+  commands:
+  - mccli backup restore
+- flow: Adjust a client's timeout
+  commands:
+  - mccli client edit --name=<full path of client in domain hierarchy> --timeout=<new value>

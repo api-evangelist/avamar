@@ -61,6 +61,11 @@ apis:
   - Backup
   - Data Protection
   - REST
+  - Authentication
+  tags_raw:
+  - Backup
+  - Data Protection
+  - REST
   - OAuth
   properties:
   - type: Documentation

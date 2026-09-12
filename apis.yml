@@ -86,6 +86,8 @@ apis:
   - type: GettingStarted
     url: https://www.delltechnologies.com/asset/en-us/products/data-protection/technical-support/docu89854.pdf
 common:
+- type: Website
+  url: https://www.dell.com/
 - type: DeveloperPortal
   url: https://developer.dell.com/
 - type: Documentation

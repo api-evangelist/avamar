@@ -64,26 +64,64 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Avamar is enterprise backup and recovery software built on client-side global data deduplication. Founded in Irvine, California and backed by Lightspeed Venture Partners, it was acquired by EMC in November 2006 for approximately $165 million and now ships as **Dell Avamar**, part of the Dell Technologies data protection portfolio.
+> **Acquired or rebranded.** This company was acquired, merged or renamed. Its API, if it still exists, is offered under another name. This profile is kept as a historical record and is not maintained or rated.
 
-Avamar is **customer-hosted** — an appliance, a Data Store grid, or a virtual edition — so its REST API runs on the customer's own server rather than on a Dell-operated multi-tenant host. That shapes every artifact in this repo.
+Avamar is enterprise backup and recovery software built on client-side global data deduplication, founded in Irvine, California and backed by Lightspeed Venture Partners before EMC acquired the company in November 2006 for approximately $165 million. Avamar now ships as Dell Avamar, part of the Dell Technologies data protection portfolio, and is deployed as a customer-hosted appliance or virtual edition rather than as a public SaaS. It exposes a REST API on the Avamar server for programmatic backup, restore, client, domain, dataset, policy and activity management, secured with OAuth 2.0 access tokens and optional OIDC single sign-on, and documented through a Swagger UI served from the appliance itself. A first-party Management Console Command Line Interface (mccli) and the avtar/avmaint command set provide the scripted administrative surface alongside the API.
 
-## API surface
+**Areas:** Company · Backup · Data Protection · Deduplication · Disaster Recovery · Storage · Enterprise Software · Infrastructure · Dell Technologies · On-Premises
 
-- **Base path** — `https://<AvamarServer>/api/v1`
-- **Description** — Swagger UI served from the appliance at `https://<AvamarServer>/api/swagger-ui.html`. Dell publishes no downloadable OpenAPI document.
-- **Auth** — OAuth 2.0. Register a client (`POST /api/v1/oauth2/clients`, HTTP Basic admin), then obtain a bearer token (`POST /api/oauth/token`, grant_type=password). RS256 JWTs, 1800s access / 43200s refresh. OIDC SSO for the Avamar Web UI, validated against Keycloak.
-- **Scopes** — `read`, `write`, `all`, plus OIDC `openid` and `profile`. Effective permissions also depend on the Avamar role and domain bound to the token.
-- **Async** — long-running operations return a `task` resource polled through QUEUED → RUNNING → SUCCESS / ERROR / CANCELED / ABORTED.
-- **CLI** — `mccli` (Management Console CLI) plus `avtar`, `avmaint`, `avmgr`, `dpnctl`, `avinstaller`.
-- **Current release** — 19.12.
+## Avamar on APIs.io (historical record)
 
-## Artifacts
+Everything profiled for Avamar is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/avamar/](https://apis.io/providers/avamar/)** — or go straight to one of the APIs or properties below.
 
-`authentication/` `scopes/` `conventions/` `errors/` `lifecycle/` `changelog/` `cli/` `data-model/` `conformance/` `packages/` `security/` `well-known/` `llms/`
+### APIs (1)
 
-## Not published
+- [Avamar REST API](https://apis.io/apis/avamar/avamar-rest-api/) — The Avamar REST API provides a framework to develop applications and tools that interact with a stand-alone Avamar server. It exposes backup, restore,…
 
-Searched for and genuinely absent: public OpenAPI file, AsyncAPI or webhook surface, official MCP server, SDK in any package registry, sandbox or test credentials, status page or uptime SLA, embeddable UI components, gRPC/Protobuf, and a Dell-published Postman workspace.
+### Published properties
 
-Backed by: lightspeed-venture-partners
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Avamar Authentication](https://apis.io/security/avamar/avamar-authentication/)
+- [Avamar Domain Security](https://apis.io/security/avamar/avamar-domain-security/)
+- [Avamar Trust Center](https://apis.io/security/avamar/avamar-trust-center/)
+- [Avamar Vulnerability Disclosure](https://apis.io/security/avamar/avamar-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Avamar Scopes](https://apis.io/scopes/avamar/avamar-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.dell.com/)
+- [Documentation](https://www.dell.com/support/home/en-us/product-support/product/avamar-rest-api/docs)
+- [Getting started](https://www.delltechnologies.com/asset/en-us/products/data-protection/technical-support/docu89854.pdf)
+- [API reference](https://www.dell.com/support/product-details/en-us/product/avamar-rest-api/resources/manuals)
+- [Support](https://www.dell.com/support/home/en-us/product-support/product/avamar-server/overview)
+- [Security](https://www.dell.com/support/contents/en-us/article/product-support/self-support-knowledgebase/security-antivirus/alerts-vulnerabilities/dell-vulnerability-response-policy)
+- [Compliance](https://www.dell.com/en-us/dt/about-us/security-and-trust-center/compliance-service-organization-control-overlay.htm)
+- [GitHub](https://github.com/dell)
+
+## API Evangelist rating
+
+**Not rated** — this company is recorded as acquired or rebranded, so no score is published. If it is in fact operating, say so on this repository and it will be re-profiled.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Avamar: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/avamar/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
